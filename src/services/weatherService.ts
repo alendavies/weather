@@ -47,23 +47,32 @@ const formatCurrentWeather = (data: WeatherData) => {
         icon,
     };
 };
-
-interface Forecast {
+export interface ForecastItem {
     title: string;
     temp: number;
     icon: string;
 }
 
 const formatForecastWeather = (data: ForecastData) => {
-    const fiveDays = data.list.slice(1, 6);
-    const forecast: Forecast = { title: "", temp: 0, icon: "" };
-    let { title, temp, icon } = forecast;
-    fiveDays.map((d) => {
-        title = formatToLocalTime(d.dt, data.city.timezone, "ccc");
-        temp = d.main.temp;
-        icon = d.weather[0].icon;
+    const fiveDays: ForecastItem[] = data.list.map((d) => {
+        return {
+            title: formatToLocalTime(
+                d.dt,
+                data.city.timezone,
+                { weekday: "short" },
+                false
+            ),
+            temp: d.main.temp,
+            icon: d.weather[0].icon,
+        };
     });
-    return { title, temp, icon };
+    const forecast = fiveDays
+        .filter(
+            (obj, index, self) =>
+                index === self.findIndex((o) => o.title === obj.title)
+        )
+        .slice(0, 5);
+    return { forecast };
 };
 
 const getFormattedWeatherData = async (searchParams: object) => {
@@ -83,12 +92,17 @@ const getFormattedWeatherData = async (searchParams: object) => {
     return { ...formattedCurrentWeather, ...formattedForecastWeather };
 };
 
-const formatToLocalTime = (
-    secs: number,
-    zone: number,
-    format = "cccc, dd LLL yyyy', | Local time: 'hh:mm a"
-) => {
-    return DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+const formatToLocalTime = (secs, timezone, options, custom) => {
+    const dateFormatter = new Intl.DateTimeFormat("en-US", options);
+    const date = new Date(secs * 1000);
+    date.setSeconds(date.getSeconds() + timezone);
+    const formattedDate = dateFormatter.format(date).toString();
+
+    if (!custom) return formattedDate;
+
+    const [day, month, year, hour] = formattedDate.split(", ");
+    const customFormattedDate = `${day}, ${month} ${year} | Local time: ${hour}`;
+    return customFormattedDate;
 };
 
 const iconUrlFromCode = (code: string) =>

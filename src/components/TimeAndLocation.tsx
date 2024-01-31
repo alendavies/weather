@@ -9,7 +9,21 @@ function TimeAndLocation({ weather }: { weather: WeatherData }) {
     return (
         <div className="flex flex-col justify-center items-center my-6 space-y-3 text-white">
             <p className="text-lg font-extralight">
-                {formatToLocalTime(dt, timezone)}
+                {formatToLocalTime(
+                    dt,
+                    timezone,
+                    {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                        timeZone: "UTC",
+                    },
+                    true
+                )}
             </p>
             <p className="text-3xl font-medium">{`${name}, ${country}`}</p>
         </div>

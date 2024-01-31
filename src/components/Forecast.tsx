@@ -1,37 +1,28 @@
-function Forecast({ title }: { title: string }) {
+import { ForecastItem, iconUrlFromCode } from "../services/weatherService";
+
+function Forecast({ items }: { items: ForecastItem[] }) {
+    if (!items) {
+        return <>Loading...</>;
+    }
+
     return (
         <div>
             <div className="flex justify-start items-center mt-6 text-white">
-                <p className="uppercase font-medium">{title}</p>
+                <p className="uppercase font-medium">daily forecast</p>
             </div>
             <hr className="my-2" />
 
             <div className="flex justify-between items-center text-sm text-white">
-                <div className="flex flex-col items-center justify-center">
-                    <p className="font-light text-sm">04:30 PM</p>
-                    <img src="/weather.svg" className="w-12 my-1" />
-                    <p className="font-medium">22°</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <p className="font-light text-sm">04:30 PM</p>
-                    <img src="/weather.svg" className="w-12 my-1" />
-                    <p className="font-medium">22°</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <p className="font-light text-sm">04:30 PM</p>
-                    <img src="/weather.svg" className="w-12 my-1" />
-                    <p className="font-medium">22°</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <p className="font-light text-sm">04:30 PM</p>
-                    <img src="/weather.svg" className="w-12 my-1" />
-                    <p className="font-medium">22°</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                    <p className="font-light text-sm">04:30 PM</p>
-                    <img src="/weather.svg" className="w-12 my-1" />
-                    <p className="font-medium">22°</p>
-                </div>
+                {items.map((item) => (
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="font-light text-sm">{item.title}</p>
+                        <img
+                            src={iconUrlFromCode(item.icon)}
+                            className="w-12 my-1"
+                        />
+                        <p className="font-medium">{`${item.temp.toFixed()}°`}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );

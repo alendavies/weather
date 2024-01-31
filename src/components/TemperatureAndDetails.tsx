@@ -64,7 +64,17 @@ function TemperatureAndDetails({ weather }: { weather: WeatherData }) {
                 <p className="space-x-1">
                     <span>Rise:</span>
                     <span className="font-medium">
-                        {formatToLocalTime(sunrise, timezone, "hh:mm a")}
+                        {formatToLocalTime(
+                            sunrise,
+                            timezone,
+                            {
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: true,
+                                timeZone: "UTC",
+                            },
+                            false
+                        )}
                     </span>
                 </p>
                 <p>|</p>
@@ -72,7 +82,17 @@ function TemperatureAndDetails({ weather }: { weather: WeatherData }) {
                 <p className="space-x-1">
                     <span>Set:</span>
                     <span className="font-medium">
-                        {formatToLocalTime(sunset, timezone, "hh:mm a")}
+                        {formatToLocalTime(
+                            sunset,
+                            timezone,
+                            {
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: true,
+                                timeZone: "UTC",
+                            },
+                            false
+                        )}
                     </span>
                 </p>
                 <p>|</p>

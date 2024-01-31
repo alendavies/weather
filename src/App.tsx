@@ -4,12 +4,16 @@ import Layout from "./components/Layout";
 import Search from "./components/Search";
 import TemperatureAndDetails from "./components/TemperatureAndDetails";
 import TimeAndLocation from "./components/TimeAndLocation";
-import getFormattedWeatherData from "./services/weatherService";
+import getFormattedWeatherData, {
+    ForecastItem,
+} from "./services/weatherService";
 
 export interface WeatherData {
-    title: string;
-    temp: number;
-    icon: string;
+    forecast: {
+        title: string;
+        icon: string;
+        temp: number;
+    }[];
     lat: number;
     lon: number;
     feels_like: number;
@@ -43,13 +47,13 @@ function App() {
     return (
         <div className="bg-gradient-to-br from-[#708090] to-[#001F3F] shadow-xl shadow-gray-400">
             <Layout>
-                <Search />
+                <Search setQuery={setQuery} />
 
                 {weather && (
                     <div>
                         <TimeAndLocation weather={weather} />
                         <TemperatureAndDetails weather={weather} />
-                        <Forecast title="daily forecast" />
+                        <Forecast items={weather.forecast} />
                     </div>
                 )}
             </Layout>
