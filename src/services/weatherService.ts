@@ -9,6 +9,7 @@ const getWeatherData = (infoType: string, searchParams: object) => {
     url.search = new URLSearchParams({
         ...searchParams,
         appid: API_KEY,
+        units: "metric",
     }).toString();
 
     return fetch(url).then((res) => res.json());
@@ -20,6 +21,7 @@ const formatCurrentWeather = (data: WeatherData) => {
         main: { temp, feels_like, temp_min, temp_max, humidity },
         name,
         dt,
+        timezone,
         sys: { country, sunrise, sunset },
         weather,
         wind: { speed },
@@ -36,6 +38,7 @@ const formatCurrentWeather = (data: WeatherData) => {
         humidity,
         name,
         dt,
+        timezone,
         country,
         sunrise,
         sunset,
@@ -45,11 +48,16 @@ const formatCurrentWeather = (data: WeatherData) => {
     };
 };
 
+interface Forecast {
+    title: string;
+    temp: number;
+    icon: string;
+}
+
 const formatForecastWeather = (data: ForecastData) => {
     const fiveDays = data.list.slice(1, 6);
-    let title;
-    let temp;
-    let icon;
+    const forecast: Forecast = { title: "", temp: 0, icon: "" };
+    let { title, temp, icon } = forecast;
     fiveDays.map((d) => {
         title = formatToLocalTime(d.dt, data.city.timezone, "ccc");
         temp = d.main.temp;
@@ -79,7 +87,9 @@ const formatToLocalTime = (
     secs: number,
     zone: number,
     format = "cccc, dd LLL yyyy', | Local time: 'hh:mm a"
-) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+) => {
+    return DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+};
 
 const iconUrlFromCode = (code: string) =>
     `http://openweathermap.org/img/wn/${code}@2x.png`;

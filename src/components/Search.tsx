@@ -7,7 +7,7 @@ function Search() {
                 <input
                     type="text"
                     placeholder="Search..."
-                    className="text-lg font-light w-full p-2 shadow-xl focus:outline-none rounded-md text-black capitalize "
+                    className="text-lg font-light w-full p-2 shadow-xl focus:outline-none rounded-md text-black capitalize placeholder:lowercase"
                 />
                 <UilSearch
                     size={20}
