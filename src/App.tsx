@@ -45,7 +45,7 @@ function App() {
     }, [query]);
 
     return (
-        <div className="bg-gradient-to-br from-[#708090] to-[#001F3F] shadow-xl shadow-gray-400">
+        <div className="bg-gradient-to-br from-[#708090] to-[#001F3F] shadow-xl shadow-gray-400 w-screen h-screen overflow-auto">
             <Layout>
                 <Search setQuery={setQuery} />
 
