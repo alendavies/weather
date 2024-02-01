@@ -1,14 +1,14 @@
 ## Weather App
 
-- 5 day forecast
-- current temperature and weather details
-- select city with autocomplete
-- weather of current location
+- 5 day forecast.
+- Current temperature and weather details.
+- Select city with autocomplete.
+- Weather of current location.
 
 ### Built with
 
-- react
-- typescript
-- tailwindCSS
-- weatherAPI: https://api.openweathermap.org/api
-- citiesAPI: https://rapidapi.com/wirefreethought/api/geodb-cities
+- React.
+- Typescript.
+- TailwindCSS.
+- WeatherAPI: https://openweathermap.org/api
+- CitiesAPI: https://rapidapi.com/wirefreethought/api/geodb-cities
