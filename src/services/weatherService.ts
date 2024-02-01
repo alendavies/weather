@@ -1,5 +1,4 @@
 import { ForecastData, WeatherData } from "./types";
-import { DateTime } from "luxon";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
@@ -92,7 +91,12 @@ const getFormattedWeatherData = async (searchParams: object) => {
     return { ...formattedCurrentWeather, ...formattedForecastWeather };
 };
 
-const formatToLocalTime = (secs, timezone, options, custom) => {
+const formatToLocalTime = (
+    secs: number,
+    timezone: number,
+    options: object,
+    custom: boolean
+) => {
     const dateFormatter = new Intl.DateTimeFormat("en-US", options);
     const date = new Date(secs * 1000);
     date.setSeconds(date.getSeconds() + timezone);

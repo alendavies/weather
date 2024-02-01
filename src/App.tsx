@@ -4,9 +4,7 @@ import Layout from "./components/Layout";
 import Search from "./components/Search";
 import TemperatureAndDetails from "./components/TemperatureAndDetails";
 import TimeAndLocation from "./components/TimeAndLocation";
-import getFormattedWeatherData, {
-    ForecastItem,
-} from "./services/weatherService";
+import getFormattedWeatherData from "./services/weatherService";
 
 export interface WeatherData {
     forecast: {
@@ -14,6 +12,8 @@ export interface WeatherData {
         icon: string;
         temp: number;
     }[];
+    icon: string;
+    temp: number;
     lat: number;
     lon: number;
     feels_like: number;
@@ -31,7 +31,7 @@ export interface WeatherData {
 }
 
 function App() {
-    const [query, setQuery] = useState({ q: "berlin" });
+    const [query, setQuery] = useState<object>({ q: "berlin" });
     const [weather, setWeather] = useState<WeatherData>();
 
     useEffect(() => {

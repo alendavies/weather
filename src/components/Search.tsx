@@ -2,12 +2,12 @@ import { UilLocationPoint } from "@iconscout/react-unicons";
 import { useState } from "react";
 import { GEO_API_URL, geoApiOptions } from "../services/geoApi";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { Cities, Datum } from "../services/geoTypes";
+import { Datum } from "../services/geoTypes";
 
-function Search({ setQuery }) {
+function Search({ setQuery }: { setQuery: (query: object) => void }) {
     const [city, setCity] = useState("");
 
-    const loadOptions = (inputValue: Cities) => {
+    const loadOptions = (inputValue: string) => {
         return fetch(
             `${GEO_API_URL}/cities?minPopulation=1000&namePrefix=${inputValue}`,
             geoApiOptions
@@ -23,12 +23,18 @@ function Search({ setQuery }) {
                     }),
                 };
             })
-            .catch((error) => console.error(error));
+            .catch((error) => {
+                console.error(error);
+                return { options: [] };
+            });
     };
 
     const handleOnChange = (value) => {
-        setQuery({ q: value.label });
-        setCity(value.label);
+        if (value !== null && !Array.isArray(value)) {
+            const selectedValue = value as { value: string; label: string };
+            setQuery({ q: selectedValue.label });
+            setCity(selectedValue.label);
+        }
     };
 
     const handleLocationClick = () => {
