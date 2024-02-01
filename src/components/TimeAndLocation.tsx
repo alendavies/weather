@@ -7,8 +7,8 @@ function TimeAndLocation({ weather }: { weather: WeatherData }) {
     if (!weather) return <>Loading...</>;
 
     return (
-        <div className="flex flex-col justify-center items-center my-6 space-y-3 text-white">
-            <p className="text-lg font-extralight">
+        <div className="flex flex-col justify-center items-center mb-6 space-y-8 lg:my-6 lg:space-y-3 text-white">
+            <p className="text-md lg:text-lg font-extralight">
                 {formatToLocalTime(
                     dt,
                     timezone,

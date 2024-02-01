@@ -7,7 +7,7 @@ function Forecast({ items }: { items: ForecastItem[] }) {
 
     return (
         <div>
-            <div className="flex justify-start items-center mt-6 text-white">
+            <div className="flex justify-start items-center sm:mt-12 mt-10 text-white">
                 <p className="uppercase font-medium">daily forecast</p>
             </div>
             <hr className="my-2" />
